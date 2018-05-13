@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="ingredients">Ingredients:</string>
     <string name="ingredient">ingredient</string>
+    <string name="ingredient_on_the_list">Ingredient is on the list.</string>
+    <string name="ingredient_must_be_filled">Ingredient field must be filled first.</string>
 </resources>

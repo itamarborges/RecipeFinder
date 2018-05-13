@@ -1,4 +1,4 @@
-package com.example.itamarborges.recipefinder;
+package com.example.itamarborges.recipefinder.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.itamarborges.recipefinder.R;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
 import java.util.List;
@@ -64,14 +66,23 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     public class IngredientsListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textIngredientList) TextView mTxtIngredientName;
+        @BindView(R.id.btnDeleteIngredient) ImageButton mBtnDeleteButton;
 
         public IngredientsListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Ingredient ingredient) {
+        public void bind(final Ingredient ingredient) {
             mTxtIngredientName.setText(ingredient.getName());
+
+            mBtnDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mIngredientsList.remove(ingredient);
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 }

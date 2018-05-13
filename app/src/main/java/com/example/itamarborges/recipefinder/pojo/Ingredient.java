@@ -22,4 +22,17 @@ public class Ingredient implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        Ingredient ing = (Ingredient) obj;
+        return this.name.equals(ing.getName());
+    }
 }

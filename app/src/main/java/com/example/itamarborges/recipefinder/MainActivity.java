@@ -1,5 +1,6 @@
 package com.example.itamarborges.recipefinder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
 import java.util.ArrayList;
@@ -58,8 +61,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), RecipesListActivity.class);
+                intent.putParcelableArrayListExtra(RecipesListActivity.INGREDIENTS_INDEX, (ArrayList) mIngredientsList);
+                startActivity(intent);
             }
         });
     }
@@ -80,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Teste", Toast.LENGTH_LONG).show();
             return true;
         }
 
@@ -90,11 +97,18 @@ public class MainActivity extends AppCompatActivity {
     public void btnAddIngredient() {
 
         if (textInputIngredient.getText().toString().isEmpty()) {
-            Snackbar.make(mRecyclerIngredients, "Ingredient field must be filled first.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mRecyclerIngredients, getString(R.string.ingredient_must_be_filled), Snackbar.LENGTH_LONG).show();
             return;
         }
 
-        mIngredientsList.add(new Ingredient(textInputIngredient.getText().toString()));
+        Ingredient ingredient = new Ingredient(textInputIngredient.getText().toString());
+
+        if (mIngredientsList.contains(ingredient)){
+            Snackbar.make(mRecyclerIngredients, getString(R.string.ingredient_on_the_list), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        mIngredientsList.add(ingredient);
         mIngredientsListAdapter.setIngredientsList(mIngredientsList);
         textInputIngredient.getText().clear();
 
