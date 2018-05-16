@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             mIngredientsList = (ArrayList) savedInstanceState.getParcelableArrayList(INGREDIENTS_LIST_INDEX);
         }
 
+        mIngredientsList.add(new Ingredient("garlic"));
+        mIngredientsList.add(new Ingredient("apple"));
+
         mIngredientsListAdapter = new IngredientsListAdapter(mIngredientsList);
 
         LinearLayoutManager layoutManagerIngredients = new LinearLayoutManager(this);

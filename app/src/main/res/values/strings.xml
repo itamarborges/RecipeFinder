@@ -5,4 +5,5 @@
     <string name="ingredient">ingredient</string>
     <string name="ingredient_on_the_list">Ingredient is on the list.</string>
     <string name="ingredient_must_be_filled">Ingredient field must be filled first.</string>
+    <string name="recipes">Recipes:</string>
 </resources>
