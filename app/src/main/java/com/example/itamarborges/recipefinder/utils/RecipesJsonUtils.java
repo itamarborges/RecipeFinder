@@ -152,7 +152,7 @@ public final class RecipesJsonUtils {
             String url = recipeJson.getString(RECIPE_URL);
             Double calories = recipeJson.getDouble(RECIPE_CALORIES);
 
-            Recipe recipe = new Recipe(label, urlImage, source, url, calories);
+            Recipe recipe = new Recipe(-1, label, urlImage, source, url, calories);
 
             recipes.add(recipe);
         }

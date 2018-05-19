@@ -53,10 +53,6 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
         setContentView(R.layout.activity_recipes_list);
         ButterKnife.bind(this);
 
-        if (getIntent() != null) {
-            mIngredientsList = (ArrayList) getIntent().getParcelableArrayListExtra(INGREDIENTS_INDEX);
-        }
-
         mIngredientsSummaryAdapter = new IngredientsSummaryAdapter(mIngredientsList);
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getBaseContext());
@@ -79,6 +75,11 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (getIntent() != null && mIngredientsList == null) {
+            mIngredientsList = (ArrayList) getIntent().getParcelableArrayListExtra(INGREDIENTS_INDEX);
+        }
+
         getSupportLoaderManager().restartLoader(RECIPES_LOADER, null, this);
     }
 

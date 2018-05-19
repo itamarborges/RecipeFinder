@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.itamarborges.recipefinder.R;
+import com.example.itamarborges.recipefinder.RecipeDetailActivity;
 import com.example.itamarborges.recipefinder.pojo.Recipe;
 import com.squareup.picasso.Picasso;
 
@@ -94,21 +95,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
             mRecipeSource.setText("Source: ".concat(String.valueOf(recipe.getSource())));
             mRecipeCalories.setText("Calories: ".concat(String.valueOf(recipe.getCalories())));
 
-//            mCvRecipe.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
+            mCvRecipe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
 //                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
 //                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingAppWidget.class));
 //                    BakingAppWidget.updateFromActivity(mContext, appWidgetManager, appWidgetIds, recipe);
 
+                    Intent intent = new Intent(mContext, RecipeDetailActivity.class);
+                    intent.putExtra(RecipeDetailActivity.RECIPE_INDEX, recipe);
 
-//                    Intent intent = new Intent(mContext, RecipeMasterActivity.class);
-//                    intent.putExtra(RecipeMasterActivity.INTENT_KEY_ID, recipe.getId());
-//
-//                    mContext.startActivity(intent);
-//                }
-//            });
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         public RecipeHolder(View itemView, Context context) {
