@@ -131,11 +131,13 @@ public final class RecipesJsonUtils {
         final String RECIPES_HITS = "hits";
         final String RECIPES_RECIPE = "recipe";
 
+        final String RECIPE_URI = "uri";
         final String RECIPE_LABEL = "label";
         final String RECIPE_URL_IMAGE = "image";
         final String RECIPE_SOURCE = "source";
         final String RECIPE_URL = "url";
         final String RECIPE_CALORIES = "calories";
+
 
         List<Recipe> recipes = new ArrayList<>();
 
@@ -146,13 +148,14 @@ public final class RecipesJsonUtils {
 
             JSONObject recipeJson = hitsArray.getJSONObject(i).getJSONObject(RECIPES_RECIPE);
 
+            String uri = recipeJson.getString(RECIPE_URI);
             String label = recipeJson.getString(RECIPE_LABEL);
             String urlImage = recipeJson.getString(RECIPE_URL_IMAGE);
             String source = recipeJson.getString(RECIPE_SOURCE);
             String url = recipeJson.getString(RECIPE_URL);
             Double calories = recipeJson.getDouble(RECIPE_CALORIES);
 
-            Recipe recipe = new Recipe(-1, label, urlImage, source, url, calories);
+            Recipe recipe = new Recipe(-1, uri, label, urlImage, source, url, calories);
 
             recipes.add(recipe);
         }

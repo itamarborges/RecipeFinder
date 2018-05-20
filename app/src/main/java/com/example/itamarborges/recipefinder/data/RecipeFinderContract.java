@@ -22,6 +22,7 @@ public class RecipeFinderContract {
 
         public static final String TABLE_NAME = "favorite";
 
+        public static final String COLUMN_URI = "uri";
         public static final String COLUMN_LABEL = "label";
         public static final String COLUMN_URL_IMAGE = "urlImage";
         public static final String COLUMN_SOURCE = "source";

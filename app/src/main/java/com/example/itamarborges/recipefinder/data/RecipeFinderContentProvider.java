@@ -18,7 +18,7 @@ import android.support.annotation.Nullable;
 public class RecipeFinderContentProvider extends ContentProvider {
 
     public static final int FAVORITE = 100;
-    public static final int FAVORITE_WITH_ID = 101;
+    public static final int FAVORITE_WITH_URI = 101;
 
     private RecipeFinderDbHelper mRecipeFinderDbHelper;
 
@@ -29,7 +29,7 @@ public class RecipeFinderContentProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         uriMatcher.addURI(RecipeFinderContract.AUTHORITY, RecipeFinderContract.PATH_FAVORITE, FAVORITE);
-        uriMatcher.addURI(RecipeFinderContract.AUTHORITY, RecipeFinderContract.PATH_FAVORITE + "/#", FAVORITE_WITH_ID);
+        uriMatcher.addURI(RecipeFinderContract.AUTHORITY, RecipeFinderContract.PATH_FAVORITE + "/*", FAVORITE_WITH_URI);
 
         return uriMatcher;
     }
@@ -61,10 +61,10 @@ public class RecipeFinderContentProvider extends ContentProvider {
                         null,
                         sortOrder);
                 break;
-            case FAVORITE_WITH_ID:
+            case FAVORITE_WITH_URI:
                 String id = uri.getPathSegments().get(1);
 
-                String mSelection = "_id=?";
+                String mSelection = "uri=?";
                 String[] mSelectionArgs = new String[]{id};
 
                 retCursor =  db.query(RecipeFinderContract.FavoriteEntry.TABLE_NAME,
@@ -129,10 +129,10 @@ public class RecipeFinderContentProvider extends ContentProvider {
         int tasksDeleted;
 
         switch (match) {
-            case FAVORITE_WITH_ID:
-                String id = uri.getPathSegments().get(1);
+            case FAVORITE_WITH_URI:
+                String uriId = uri.getPathSegments().get(1);
 
-                tasksDeleted = db.delete(RecipeFinderContract.FavoriteEntry.TABLE_NAME, "_id=?", new String[]{id});
+                tasksDeleted = db.delete(RecipeFinderContract.FavoriteEntry.TABLE_NAME, "uri=?", new String[]{uriId});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

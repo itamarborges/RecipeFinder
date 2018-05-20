@@ -106,7 +106,8 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
                     List<Recipe> mRecipes = new ArrayList<>();
                     String queryResult = null;
                     try {
-                        queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+//                        queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+                        queryResult = NetworkUtils.getResponseFromHttpUrl("teste");
 
                         mRecipes = RecipesJsonUtils.getRecipes(queryResult);
 

@@ -18,26 +18,25 @@ import java.util.List;
 
 public class RecipeModel {
 
-    public Uri insert(Context context, String label, String urlImage, String source, String url, Double calories) {
+    public Uri insert(Context context, String uri, String label, String urlImage, String source, String url, Double calories) {
 
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_URI, uri);
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_LABEL, label);
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_URL_IMAGE, urlImage);
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_SOURCE, source);
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_URL, url);
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_CALORIES, calories);
 
-        Uri uri = context.getContentResolver().insert(RecipeFinderContract.FavoriteEntry.CONTENT_URI, contentValues);
+        Uri uriInsert = context.getContentResolver().insert(RecipeFinderContract.FavoriteEntry.CONTENT_URI, contentValues);
 
-        return uri;
+        return uriInsert;
     }
 
-    public int delete(Context context, int id) {
+    public int delete(Context context, String uri) {
 
-        Uri uriToDelete = ContentUris.withAppendedId(RecipeFinderContract.FavoriteEntry.CONTENT_URI, id);
-
-        int deletedRows = context.getContentResolver().delete(uriToDelete, null, null);
+        int deletedRows = context.getContentResolver().delete(RecipeFinderContract.FavoriteEntry.CONTENT_URI.buildUpon().appendPath(uri).build(), null, null);
 
         return deletedRows;
     }
@@ -45,6 +44,7 @@ public class RecipeModel {
     public List<Recipe> listRecipesFromCursor(Cursor cursor) {
 
         int idCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry._ID);
+        int uriCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URI);
         int labelCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_LABEL);
         int urlImageCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URL_IMAGE);
         int sourceCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_SOURCE);
@@ -56,6 +56,7 @@ public class RecipeModel {
         while (cursor.moveToNext()) {
             Recipe recipe = new Recipe(
                     cursor.getInt(idCol),
+                    cursor.getString(uriCol),
                     cursor.getString(labelCol),
                     cursor.getString(urlImageCol),
                     cursor.getString(sourceCol),
@@ -66,11 +67,9 @@ public class RecipeModel {
         return mRecipes;
     }
 
-    public boolean isFavorite(Context context, int id) {
+    public boolean isFavorite(Context context, String uri) {
 
-        Uri uriToSelect = ContentUris.withAppendedId(RecipeFinderContract.FavoriteEntry.CONTENT_URI, id);
-
-        Cursor c = context.getContentResolver().query(RecipeFinderContract.FavoriteEntry.CONTENT_URI,
+        Cursor c = context.getContentResolver().query(RecipeFinderContract.FavoriteEntry.CONTENT_URI.buildUpon().appendPath(uri).build(),
                 null,
                 null,
                 null,

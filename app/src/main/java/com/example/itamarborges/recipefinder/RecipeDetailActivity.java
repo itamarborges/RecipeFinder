@@ -1,24 +1,36 @@
 package com.example.itamarborges.recipefinder;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.itamarborges.recipefinder.data.RecipeFinderContract;
 import com.example.itamarborges.recipefinder.model.RecipeModel;
 import com.example.itamarborges.recipefinder.pojo.Recipe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object>{
+
+    private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
     public static final String RECIPE_INDEX = "recipeIndex";
+
+    private static final int RECIPE_FAVORITE_LOADER_ID = 0;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -51,9 +63,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 fab.setActivated(!fab.isActivated());
 
                 if (fab.isActivated()) {
-                    Uri uri = RecipeModel.insert(getApplicationContext(), recipe.getLabel(), recipe.getUrlImage(), recipe.getSource(), recipe.getUrl(), recipe.getCalories());
+                    Uri uri = RecipeModel.insert(getApplicationContext(), recipe.getUri(), recipe.getLabel(), recipe.getUrlImage(), recipe.getSource(), recipe.getUrl(), recipe.getCalories());
                 } else {
-                    RecipeModel.delete(getApplicationContext(), recipe.getId());
+                    RecipeModel.delete(getApplicationContext(), recipe.getUri());
                 }
                 
                 
@@ -61,6 +73,65 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportLoaderManager().initLoader(RECIPE_FAVORITE_LOADER_ID, null, this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportLoaderManager().restartLoader(RECIPE_FAVORITE_LOADER_ID, null, this);
+    }
+
+    @NonNull
+    @Override
+    public Loader<Object> onCreateLoader(int id, @Nullable Bundle args) {
+        return new AsyncTaskLoader<Object>(this) {
+
+            Cursor mRecipeData = null;
+
+            @Override
+            protected void onStartLoading() {
+                if (mRecipeData != null) {
+                    deliverResult(mRecipeData);
+                } else {
+                    forceLoad();
+                }
+            }
+
+            @Override
+            public Cursor loadInBackground() {
+                Uri uriToSelect = RecipeFinderContract.FavoriteEntry.CONTENT_URI.buildUpon().appendPath(recipe.getUri()).build();
+
+                try {
+                    return getContentResolver().query(uriToSelect,
+                            null,
+                            null,
+                            null,
+                            null);
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to asynchronously load data.");
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            // deliverResult sends the result of the load, a Cursor, to the registered listener
+            public void deliverResult(Cursor data) {
+                mRecipeData = data;
+                super.deliverResult(data);
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
+        fab.setActivated(((Cursor) data).moveToFirst());
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Object> loader) {
+
+    }
 }
