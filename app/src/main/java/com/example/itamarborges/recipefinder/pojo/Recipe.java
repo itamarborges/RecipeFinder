@@ -9,20 +9,27 @@ import java.io.Serializable;
 public class Recipe implements Serializable {
 
     int id;
+    String uri;
     String label;
     String urlImage;
     String source;
     String url;
     Double calories;
 
-    public Recipe(int id, String label, String urlImage, String source, String url, Double calories) {
+    public Recipe(int id, String uri, String label, String urlImage, String source, String url, Double calories) {
         this.id = id;
+        this.uri = uri;
         this.label = label;
         this.urlImage = urlImage;
         this.source = source;
         this.url = url;
         this.calories = calories;
     }
+
+
+    public String getUri() { return uri; }
+
+    public void setUri(String uri) { this.uri = uri; }
 
     public int getId() {
         return id;
@@ -32,10 +39,7 @@ public class Recipe implements Serializable {
         this.id = id;
     }
 
-    public String getLabel() {
-
-        return label;
-    }
+    public String getLabel() { return label; }
 
     public void setLabel(String label) {
         this.label = label;
