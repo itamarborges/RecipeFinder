@@ -1,7 +1,9 @@
 package com.example.itamarborges.recipefinder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -15,18 +17,19 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
+import com.example.itamarborges.recipefinder.model.IngredientModel;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String INGREDIENTS_LIST_INDEX = "ingredientsListIndex";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -44,12 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         mIngredientsList = new ArrayList<>();
 
-        if (savedInstanceState != null) {
-            mIngredientsList = (ArrayList) savedInstanceState.getParcelableArrayList(INGREDIENTS_LIST_INDEX);
-        }
-
         mIngredientsList.add(new Ingredient("garlic"));
         mIngredientsList.add(new Ingredient("apple"));
+
+        IngredientModel.setArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
 
         mIngredientsListAdapter = new IngredientsListAdapter(mIngredientsList);
 
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Intent intent = new Intent(getApplicationContext(), RecipesListActivity.class);
-                intent.putParcelableArrayListExtra(RecipesListActivity.INGREDIENTS_INDEX, (ArrayList) mIngredientsList);
                 startActivity(intent);
             }
         });
@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Teste", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), RecipeFavoriteListActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -115,18 +116,12 @@ public class MainActivity extends AppCompatActivity {
         mIngredientsListAdapter.setIngredientsList(mIngredientsList);
         textInputIngredient.getText().clear();
 
-
+        IngredientModel.setArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putParcelableArrayList(INGREDIENTS_LIST_INDEX, (ArrayList) mIngredientsList);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
+        mIngredientsList = IngredientModel.getArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
     }
 }

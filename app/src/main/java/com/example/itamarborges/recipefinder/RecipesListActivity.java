@@ -16,6 +16,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
 import com.example.itamarborges.recipefinder.adapter.IngredientsSummaryAdapter;
 import com.example.itamarborges.recipefinder.adapter.RecipeAdapter;
+import com.example.itamarborges.recipefinder.model.IngredientModel;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 import com.example.itamarborges.recipefinder.pojo.Recipe;
 import com.example.itamarborges.recipefinder.utils.NetworkUtils;
@@ -75,11 +76,8 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (getIntent() != null && mIngredientsList == null) {
-            mIngredientsList = (ArrayList) getIntent().getParcelableArrayListExtra(INGREDIENTS_INDEX);
-        }
-
+        mIngredientsList = IngredientModel.getArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+        mIngredientsSummaryAdapter.setIngredientsList(mIngredientsList);
         getSupportLoaderManager().restartLoader(RECIPES_LOADER, null, this);
     }
 

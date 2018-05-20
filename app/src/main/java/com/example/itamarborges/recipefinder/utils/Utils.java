@@ -1,7 +1,13 @@
 package com.example.itamarborges.recipefinder.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by itamarborges on 14/03/18.

@@ -47,8 +47,6 @@ public class NetworkUtils {
         }
         sbIngredients.deleteCharAt(sbIngredients.lastIndexOf(","));
 
-        String ingredientsComma = TextUtils.join(",", ingredients);
-
          Uri builtUri = Uri.parse(EDAMAM_API_URL).buildUpon()
                 .appendEncodedPath(EDAMAM_API_SEARCH)
                 .appendQueryParameter(EDAMAM_API_QUERY, sbIngredients.toString())

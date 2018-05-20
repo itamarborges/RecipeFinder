@@ -13,11 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name=".data.RecipeFinderContentProvider"
             android:authorities="com.example.itamarborges.recipefinder"
-            android:exported="false" />
+            android:exported="false"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -40,6 +40,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.itamarborges.recipefinder.RecipesListActivity"/>
+        </activity>
+        <activity android:name=".RecipeFavoriteListActivity"
+                  android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

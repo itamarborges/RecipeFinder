@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.itamarborges.recipefinder.R;
+import com.example.itamarborges.recipefinder.model.IngredientModel;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
 import java.util.List;
@@ -39,11 +40,12 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
     }
 
     private List<Ingredient> mIngredientsList;
+    private Context context;
 
     @NonNull
     @Override
     public IngredientsListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
+        context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.ingredient_list;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
@@ -81,6 +83,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
                 public void onClick(View view) {
                     mIngredientsList.remove(ingredient);
                     notifyDataSetChanged();
+                    IngredientModel.setArrayListToSharePreferences(context, IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
                 }
             });
         }

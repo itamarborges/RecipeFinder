@@ -41,28 +41,42 @@ public class RecipeModel {
         return deletedRows;
     }
 
-    public List<Recipe> listRecipesFromCursor(Cursor cursor) {
+    public List<Recipe> listFavoriteRecipes(Context context) {
 
-        int idCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry._ID);
-        int uriCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URI);
-        int labelCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_LABEL);
-        int urlImageCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URL_IMAGE);
-        int sourceCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_SOURCE);
-        int urlCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URL);
-        int caloriesCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_CALORIES);
+        List<Recipe> mRecipes = null;
 
-        List<Recipe> mRecipes = new ArrayList<>();
+        try {
 
-        while (cursor.moveToNext()) {
-            Recipe recipe = new Recipe(
-                    cursor.getInt(idCol),
-                    cursor.getString(uriCol),
-                    cursor.getString(labelCol),
-                    cursor.getString(urlImageCol),
-                    cursor.getString(sourceCol),
-                    cursor.getString(urlCol),
-                    cursor.getDouble(caloriesCol));
-            mRecipes.add(recipe);
+            Cursor cursor = context.getContentResolver().query(RecipeFinderContract.FavoriteEntry.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            int idCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry._ID);
+            int uriCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URI);
+            int labelCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_LABEL);
+            int urlImageCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URL_IMAGE);
+            int sourceCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_SOURCE);
+            int urlCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_URL);
+            int caloriesCol = cursor.getColumnIndex(RecipeFinderContract.FavoriteEntry.COLUMN_CALORIES);
+
+            mRecipes = new ArrayList<>();
+
+            while (cursor.moveToNext()) {
+                Recipe recipe = new Recipe(
+                        cursor.getInt(idCol),
+                        cursor.getString(uriCol),
+                        cursor.getString(labelCol),
+                        cursor.getString(urlImageCol),
+                        cursor.getString(sourceCol),
+                        cursor.getString(urlCol),
+                        cursor.getDouble(caloriesCol));
+                mRecipes.add(recipe);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return mRecipes;
     }

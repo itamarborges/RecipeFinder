@@ -7,4 +7,5 @@
     <string name="ingredient_must_be_filled">Ingredient field must be filled first.</string>
     <string name="recipes">Recipes:</string>
     <string name="title_activity_recipe_detail">RecipeDetailActivity</string>
+  <string name="favorite_recipes">Favorite Recipes:</string>
 </resources>
