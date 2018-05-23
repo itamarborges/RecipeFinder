@@ -17,6 +17,7 @@ import com.example.itamarborges.recipefinder.RecipeDetailActivity;
 import com.example.itamarborges.recipefinder.pojo.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -99,12 +100,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
                 @Override
                 public void onClick(View view) {
 
-//                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-//                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingAppWidget.class));
-//                    BakingAppWidget.updateFromActivity(mContext, appWidgetManager, appWidgetIds, recipe);
-
                     Intent intent = new Intent(mContext, RecipeDetailActivity.class);
-                    intent.putExtra(RecipeDetailActivity.RECIPE_INDEX, recipe);
+                    intent.putExtra(RecipeDetailActivity.RECIPE_INDEX, (Serializable) recipe);
 
                     mContext.startActivity(intent);
                 }

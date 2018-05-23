@@ -1,11 +1,14 @@
 package com.example.itamarborges.recipefinder.model;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.example.itamarborges.recipefinder.RecipeFavoriteWidget;
 import com.example.itamarborges.recipefinder.data.RecipeFinderContract;
 import com.example.itamarborges.recipefinder.pojo.Recipe;
 
@@ -90,5 +93,16 @@ public class RecipeModel {
                 null);
 
         return c.moveToNext();
+    }
+
+    public void updateWidget(Context context) {
+
+        List<Recipe> mRecipes = listFavoriteRecipes(context);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, RecipeFavoriteWidget.class));
+        RecipeFavoriteWidget.updateFromActivity(context, appWidgetManager, appWidgetIds, mRecipes);
+
+
     }
 }

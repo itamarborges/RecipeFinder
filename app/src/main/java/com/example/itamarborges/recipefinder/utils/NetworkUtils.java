@@ -30,7 +30,6 @@ public class NetworkUtils {
 
 
     public final static String EDAMAM_API_QUERY = "q";
-    public final static String THE_MOVIE_DB_REVIEWS = "reviews";
 
     final static String EDAMAM_API_KEY = "app_key";
     final static String EDAMAM_API_ID = "app_id";
@@ -60,23 +59,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
-        return url;
-    }
-
-    public static URL buildUrlAditionalPath(String path, String aditionalPath) {
-////        Uri builtUri = Uri.parse(THE_MOVIE_DB_BASE_URL).buildUpon()
-//                .appendPath(path)
-//                .appendPath(aditionalPath)
-//                .appendQueryParameter(THE_MOVIE_DB_API_KEY, API_KEY)
-//                .build();
-
-        URL url = null;
-//        try {
-//            url = new URL(builtUri.toString());
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
 
         return url;
     }

@@ -1,12 +1,15 @@
 package com.example.itamarborges.recipefinder.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by itamarborges on 12/05/18.
  */
 
-public class Recipe implements Serializable {
+public class Recipe implements Serializable, Parcelable {
 
     int id;
     String uri;
@@ -77,4 +80,47 @@ public class Recipe implements Serializable {
         this.calories = calories;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(uri);
+        dest.writeString(label);
+        dest.writeString(urlImage);
+        dest.writeString(source);
+        dest.writeString(url);
+        if (calories == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeDouble(calories);
+        }
+    }
+
+    protected Recipe(Parcel in) {
+        id = in.readInt();
+        uri = in.readString();
+        label = in.readString();
+        urlImage = in.readString();
+        source = in.readString();
+        url = in.readString();
+        calories = in.readByte() == 0x00 ? null : in.readDouble();
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }

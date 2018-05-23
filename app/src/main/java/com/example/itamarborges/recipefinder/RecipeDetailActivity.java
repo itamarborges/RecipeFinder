@@ -59,17 +59,15 @@ public class RecipeDetailActivity extends AppCompatActivity implements LoaderMan
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RecipeModel RecipeModel = new RecipeModel();
+                RecipeModel recipeModel = new RecipeModel();
                 fab.setActivated(!fab.isActivated());
 
                 if (fab.isActivated()) {
-                    Uri uri = RecipeModel.insert(getApplicationContext(), recipe.getUri(), recipe.getLabel(), recipe.getUrlImage(), recipe.getSource(), recipe.getUrl(), recipe.getCalories());
+                    Uri uri = recipeModel.insert(getApplicationContext(), recipe.getUri(), recipe.getLabel(), recipe.getUrlImage(), recipe.getSource(), recipe.getUrl(), recipe.getCalories());
                 } else {
-                    RecipeModel.delete(getApplicationContext(), recipe.getUri());
+                    recipeModel.delete(getApplicationContext(), recipe.getUri());
                 }
-                
-                
-                
+                recipeModel.updateWidget(getApplicationContext());
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

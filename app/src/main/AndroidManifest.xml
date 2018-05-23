@@ -41,9 +41,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.itamarborges.recipefinder.RecipesListActivity"/>
         </activity>
-        <activity android:name=".RecipeFavoriteListActivity"
-                  android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".RecipeFavoriteListActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
+
+        <receiver android:name=".RecipeFavoriteWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/recipe_favorite_widget_info"/>
+        </receiver>
+
+        <service
+            android:name=".RecipeFavoriteWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
