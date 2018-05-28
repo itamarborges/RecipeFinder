@@ -24,6 +24,7 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'API_KEY', keystoreProperties['API_KEY']
         it.buildConfigField 'String', 'API_ID', keystoreProperties['API_ID']
+        it.buildConfigField 'String', 'GOOGLE_ANALITICS_KEY', keystoreProperties['GOOGLE_ANALITICS_KEY']
     }
 }
 
@@ -44,4 +45,5 @@ dependencies {
     implementation 'com.google.android:flexbox:0.3.2'
     compile 'com.android.support:cardview-v7:27.1.1'
     compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.google.android.gms:play-services-analytics:15.0.2'
 }
