@@ -16,6 +16,12 @@
         android:layout_margin="@dimen/default_margin"
         android:orientation="vertical">
 
+        <fragment android:name="com.example.itamarborges.recipefinder.fragments.AdFragment"
+                  android:id="@+id/anuncioMain"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  tools:layout="@layout/fragment_ad"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +39,7 @@
                     android:id="@+id/input_ingredient"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Type an ingredient:"/>
+                    android:hint="@string/type_an_ingredient"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -45,7 +51,8 @@
                 android:src="@android:drawable/btn_dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/add_ingredient_description"/>
 
 
         </LinearLayout>
