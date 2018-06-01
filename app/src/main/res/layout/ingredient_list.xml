@@ -11,9 +11,15 @@
         android:id="@+id/textIngredientList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnDeleteIngredient"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/ingredient"/>
 
     <ImageButton
@@ -21,10 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@android:drawable/ic_delete"
+        android:backgroundTint="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/textIngredientList"
+        android:contentDescription="@string/delete_an_ingredient"
         app:layout_constraintTop_toTopOf="parent"/>
 
 
