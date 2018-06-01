@@ -65,10 +65,13 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent = new Intent(getApplicationContext(), RecipesListActivity.class);
-                startActivity(intent);
+                mIngredientsList = IngredientModel.getArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+                if (mIngredientsList.size() < 1) {
+                  Snackbar.make(view, R.string.add_some_ingredient, Snackbar.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), RecipesListActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

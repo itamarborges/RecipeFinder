@@ -94,7 +94,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
             mRecipeName.setText(recipe.getLabel());
             mRecipeSource.setText("Source: ".concat(String.valueOf(recipe.getSource())));
-            mRecipeCalories.setText("Calories: ".concat(String.valueOf(recipe.getCalories())));
+            mRecipeCalories.setText("Calories: ".concat(String.format("%.2f", recipe.getCalories())));
 
             mCvRecipe.setOnClickListener(new View.OnClickListener() {
                 @Override

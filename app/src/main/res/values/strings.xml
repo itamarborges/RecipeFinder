@@ -17,4 +17,5 @@
     <string name="add_ingredient_description">Add Ingredient</string>
     <string name="favorites">Favorites</string>
     <string name="delete_an_ingredient">Delete an Ingredient</string>
+    <string name="add_some_ingredient">Add some ingredient to your list first</string>
 </resources>
