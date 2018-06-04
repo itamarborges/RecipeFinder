@@ -1,7 +1,10 @@
 package com.example.itamarborges.recipefinder;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -18,19 +21,12 @@ public class RecipeFavoriteWidgetService extends RemoteViewsService {
 
     public static final String FAVORITES_RECIPE_INGREDIENTS = "ingredients";
 
-    ArrayList<Recipe> mFavoriteRecipesIngredients;
     ArrayList<String> mFavoriteRecipes;
     String testExtra;
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-//        mFavoriteRecipesIngredients = (ArrayList) intent.getParcelableArrayListExtra(FAVORITES_RECIPE_INGREDIENTS);
-//        intent.setExtrasClassLoader(Recipe.class.getClassLoader());
         mFavoriteRecipes = (ArrayList) intent.getStringArrayListExtra(FAVORITES_RECIPE_INGREDIENTS);
-
-//        testExtra = intent.getStringExtra("teste");
-//        return new BakingRemoteViewsFactory(this.getApplicationContext(), mFavoriteRecipesIngredients);
-//        return new BakingRemoteViewsFactory(this.getApplicationContext(), testExtra);
         return new BakingRemoteViewsFactory(this.getApplicationContext(), mFavoriteRecipes);
     }
 }
@@ -38,17 +34,11 @@ public class RecipeFavoriteWidgetService extends RemoteViewsService {
 class BakingRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     Context mContext;
-    ArrayList<Recipe> mList = new ArrayList<>();
     ArrayList<String> mListRecipes = new ArrayList<>();
-    String mtestExtra;
 
-//    public BakingRemoteViewsFactory(Context applicationContext, ArrayList<Recipe> list) {
-//    public BakingRemoteViewsFactory(Context applicationContext, String testExtra) {
 public BakingRemoteViewsFactory(Context applicationContext, ArrayList<String> listRecipes) {
         mContext = applicationContext;
-//        mtestExtra = testExtra;
-//        mList = list;
-    mListRecipes = listRecipes;
+        mListRecipes = listRecipes;
     }
 
     @Override
@@ -66,15 +56,6 @@ public BakingRemoteViewsFactory(Context applicationContext, ArrayList<String> li
 
     }
 
-//    @Override
-//    public int getCount() {
-//        return mList == null ? 0 : mList.size();
-//    }
-//    @Override
-//    public int getCount() {
-//        return 2;
-//    }
-
     @Override
     public int getCount() {
         return mListRecipes == null ? 0 : mListRecipes.size();
@@ -82,12 +63,13 @@ public BakingRemoteViewsFactory(Context applicationContext, ArrayList<String> li
 
     @Override
     public RemoteViews getViewAt(int i) {
-//        if (mList == null || mList.size() == 0) return null;
         if (mListRecipes == null || mListRecipes.size() == 0) return null;
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.recipe_favorite_widget_item);
-//        rv.setTextViewText(R.id.appwidget_recipe_favorite_name, mtestExtra);
         rv.setTextViewText(R.id.appwidget_recipe_favorite_name, mListRecipes.get(i));
+
+        Intent fillInIntent = new Intent();
+        rv.setOnClickFillInIntent(R.id.widget_item_layout, fillInIntent);
 
         return rv;
     }

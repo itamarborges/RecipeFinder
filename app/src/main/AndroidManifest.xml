@@ -46,9 +46,13 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
-        <receiver android:name=".RecipeFavoriteWidget">
+        <receiver android:name=".RecipeFavoriteWidget"
+            android:enabled="true">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
             </intent-filter>
 
             <meta-data

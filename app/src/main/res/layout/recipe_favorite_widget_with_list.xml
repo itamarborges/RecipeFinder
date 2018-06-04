@@ -4,6 +4,7 @@
               android:background="@android:color/white"
               android:orientation="vertical"
               android:saveEnabled="false"
+              android:id="@+id/widget_layout"
               android:padding="@dimen/widget_margin">
     <TextView
         android:layout_width="match_parent"

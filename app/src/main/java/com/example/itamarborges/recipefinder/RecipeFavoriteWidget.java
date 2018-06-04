@@ -1,5 +1,6 @@
 package com.example.itamarborges.recipefinder;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -32,13 +33,6 @@ public class RecipeFavoriteWidget extends AppWidgetProvider {
 
             Intent intent = new Intent(context, RecipeFavoriteWidgetService.class);
 
-//            intent.putParcelableArrayListExtra(RecipeFavoriteWidgetService.FAVORITES_RECIPE_INGREDIENTS, (ArrayList) recipes);
-//            intent.putExtra("teste", "extra teste");
-
-    //            Bundle b = new Bundle();
-    //            b.putParcelable("options", new Recipe(1,"1","1","1","1","1",1.0));
-    //            intent.putExtras(b);
-
             ArrayList<String> favoriteRecipes = new ArrayList<>();
 
             for(Recipe r : recipes) {
@@ -49,12 +43,16 @@ public class RecipeFavoriteWidget extends AppWidgetProvider {
             intent.putStringArrayListExtra(RecipeFavoriteWidgetService.FAVORITES_RECIPE_INGREDIENTS, favoriteRecipes);
 
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-//            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-//            intent.setExtrasClassLoader(Recipe.class.getClassLoader());
             intent.setData(Uri.fromParts("content", String.valueOf(appWidgetId), favoriteRecipes.toString()));
 
             views.setRemoteAdapter(R.id.favorite_recipes_list, intent);
 
+            Intent homeIntent = new Intent(context, RecipeFavoriteListActivity.class);
+            homeIntent.setData(Uri.parse(homeIntent.toUri(Intent.URI_INTENT_SCHEME)));
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent homePendingIntent = PendingIntent.getActivity(context, 0, homeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            views.setOnClickPendingIntent(R.id.widget_layout, homePendingIntent);
+            views.setPendingIntentTemplate(R.id.favorite_recipes_list, homePendingIntent);
         }
     // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId,views);
