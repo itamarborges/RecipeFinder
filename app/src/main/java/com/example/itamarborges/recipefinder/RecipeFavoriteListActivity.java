@@ -1,5 +1,6 @@
 package com.example.itamarborges.recipefinder;
 
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -33,11 +34,15 @@ import butterknife.ButterKnife;
 public class RecipeFavoriteListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object>{
 
     private static final int FAVORITE_RECIPES_LOADER = 0;
+    private static final String KEY_FAVORITE_RECIPES_RV_POSITION = "rvFavoriteRecipesPosition";
 
     @BindView(R.id.rv_favorite_recipes) RecyclerView mRecyclerRecipes;
 
     List<Recipe> mRecipes;
     RecipeAdapter mRecipeAdapter;
+
+    GridLayoutManager mLayoutManager;
+    private Parcelable mLayoutManagerSavedState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +52,29 @@ public class RecipeFavoriteListActivity extends AppCompatActivity implements Loa
 
         mRecipeAdapter = new RecipeAdapter(mRecipes);
 
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this, Utils.numberOfColumns(getWindowManager()));
+        mLayoutManager = new GridLayoutManager(this, Utils.numberOfColumns(getWindowManager()));
         mRecyclerRecipes.setLayoutManager(mLayoutManager);
         mRecyclerRecipes.setAdapter(mRecipeAdapter);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(KEY_FAVORITE_RECIPES_RV_POSITION)) {
+                mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_FAVORITE_RECIPES_RV_POSITION);
+            }
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.containsKey(KEY_FAVORITE_RECIPES_RV_POSITION)) {
+            mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_FAVORITE_RECIPES_RV_POSITION);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(KEY_FAVORITE_RECIPES_RV_POSITION, mLayoutManager.onSaveInstanceState());
     }
 
     @Override
@@ -57,6 +82,10 @@ public class RecipeFavoriteListActivity extends AppCompatActivity implements Loa
         super.onResume();
 
         getSupportLoaderManager().restartLoader(FAVORITE_RECIPES_LOADER, null, this);
+
+        if (mLayoutManagerSavedState != null) {
+            mLayoutManager.onRestoreInstanceState(mLayoutManagerSavedState);
+        }
     }
 
     @NonNull
@@ -100,6 +129,10 @@ public class RecipeFavoriteListActivity extends AppCompatActivity implements Loa
     @Override
     public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
         mRecipeAdapter.setRecipes((List<Recipe>)data);
+
+        if (mLayoutManagerSavedState != null) {
+            mLayoutManager.onRestoreInstanceState(mLayoutManagerSavedState);
+        }
     }
 
     @Override
