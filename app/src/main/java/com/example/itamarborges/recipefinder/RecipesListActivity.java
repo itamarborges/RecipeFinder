@@ -1,6 +1,5 @@
 package com.example.itamarborges.recipefinder;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -9,11 +8,8 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 
-import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
 import com.example.itamarborges.recipefinder.adapter.IngredientsSummaryAdapter;
 import com.example.itamarborges.recipefinder.adapter.RecipeAdapter;
 import com.example.itamarborges.recipefinder.model.IngredientModel;
@@ -76,7 +72,7 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     @Override
     protected void onResume() {
         super.onResume();
-        mIngredientsList = IngredientModel.getArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+        mIngredientsList = IngredientModel.getArrayListFromSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
         mIngredientsSummaryAdapter.setIngredientsList(mIngredientsList);
         getSupportLoaderManager().restartLoader(RECIPES_LOADER, null, this);
     }

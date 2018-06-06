@@ -13,6 +13,7 @@ import com.example.itamarborges.recipefinder.R;
 import com.example.itamarborges.recipefinder.model.IngredientModel;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,6 +36,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
     }
 
     public void setIngredientsList(List<Ingredient> mIngredientsList) {
+        Collections.sort(mIngredientsList, new IngredientModel.IngredientComparator());
         this.mIngredientsList = mIngredientsList;
         this.notifyDataSetChanged();
     }
@@ -83,7 +85,7 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
                 public void onClick(View view) {
                     mIngredientsList.remove(ingredient);
                     notifyDataSetChanged();
-                    IngredientModel.setArrayListToSharePreferences(context, IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
+                    IngredientModel.setArrayListToSharedPreferences(context, IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
                 }
             });
         }

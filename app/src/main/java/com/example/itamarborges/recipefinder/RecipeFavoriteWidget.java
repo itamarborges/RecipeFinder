@@ -26,7 +26,7 @@ public class RecipeFavoriteWidget extends AppWidgetProvider {
         RemoteViews views;
 
         // Construct the RemoteViews object
-        if (recipes == null) {
+        if (recipes == null || recipes.size() < 1) {
             views = new RemoteViews(context.getPackageName(), R.layout.recipe_favorite_widget);
         } else {
             views = new RemoteViews(context.getPackageName(), R.layout.recipe_favorite_widget_with_list);

@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.itamarborges.recipefinder.R;
 import com.example.itamarborges.recipefinder.RecipeDetailActivity;
 import com.example.itamarborges.recipefinder.pojo.Recipe;
+import com.example.itamarborges.recipefinder.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -100,10 +102,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(mContext, RecipeDetailActivity.class);
-                    intent.putExtra(RecipeDetailActivity.RECIPE_INDEX, (Serializable) recipe);
+                    if (!NetworkUtils.isNetworkAvailable(mContext)) {
+                        Snackbar.make(view, R.string.no_internet_connection_message, Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Intent intent = new Intent(mContext, RecipeDetailActivity.class);
+                        intent.putExtra(RecipeDetailActivity.RECIPE_INDEX, (Serializable) recipe);
 
-                    mContext.startActivity(intent);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
         }

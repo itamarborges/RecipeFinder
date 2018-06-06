@@ -1,9 +1,8 @@
 package com.example.itamarborges.recipefinder;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -14,16 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
 import com.example.itamarborges.recipefinder.model.IngredientModel;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
+import com.example.itamarborges.recipefinder.utils.NetworkUtils;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +28,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String KEY_MAIN_ACTIVITY_RV_POSITION = "rvMainActivityPosition";
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.input_ingredient)TextInputEditText textInputIngredient;
@@ -38,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     List<Ingredient> mIngredientsList;
     IngredientsListAdapter mIngredientsListAdapter;
+    LinearLayoutManager mLayoutManagerIngredients;
+
+    private Parcelable mLayoutManagerSavedState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,33 +48,43 @@ public class MainActivity extends AppCompatActivity {
 
         mIngredientsList = new ArrayList<>();
 
-        mIngredientsList.add(new Ingredient("garlic"));
-        mIngredientsList.add(new Ingredient("apple"));
-
-        IngredientModel.setArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
+//        mIngredientsList.add(new Ingredient("garlic"));
+//        mIngredientsList.add(new Ingredient("apple"));
+//
+//        IngredientModel.setArrayListToSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
 
         mIngredientsListAdapter = new IngredientsListAdapter(mIngredientsList);
 
-        LinearLayoutManager layoutManagerIngredients = new LinearLayoutManager(this);
+        mLayoutManagerIngredients = new LinearLayoutManager(this);
         mRecyclerIngredients.setAdapter(mIngredientsListAdapter);
         mRecyclerIngredients.setHasFixedSize(false);
         mRecyclerIngredients.setNestedScrollingEnabled(false);
-        mRecyclerIngredients.setLayoutManager(layoutManagerIngredients);
+        mRecyclerIngredients.setLayoutManager(mLayoutManagerIngredients);
 
         setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mIngredientsList = IngredientModel.getArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+                mIngredientsList = IngredientModel.getArrayListFromSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
                 if (mIngredientsList.size() < 1) {
                   Snackbar.make(view, R.string.add_some_ingredient, Snackbar.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), RecipesListActivity.class);
-                    startActivity(intent);
+                    if (!NetworkUtils.isNetworkAvailable(getBaseContext())) {
+                        Snackbar.make(view, R.string.no_internet_connection_message, Snackbar.LENGTH_LONG).show();
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), RecipesListActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(KEY_MAIN_ACTIVITY_RV_POSITION)) {
+                mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_MAIN_ACTIVITY_RV_POSITION);
+            }
+        }
     }
 
     @Override
@@ -119,12 +130,40 @@ public class MainActivity extends AppCompatActivity {
         mIngredientsListAdapter.setIngredientsList(mIngredientsList);
         textInputIngredient.getText().clear();
 
-        IngredientModel.setArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
+        IngredientModel.setArrayListToSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mIngredientsList = IngredientModel.getArrayListToSharePreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+        mIngredientsList = IngredientModel.getArrayListFromSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+
+        if (mIngredientsList != null) {
+            mIngredientsListAdapter.setIngredientsList(mIngredientsList);
+        }
+
+        if (mLayoutManagerSavedState != null) {
+            mLayoutManagerIngredients.onRestoreInstanceState(mLayoutManagerSavedState);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(KEY_MAIN_ACTIVITY_RV_POSITION, mLayoutManagerIngredients.onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if (savedInstanceState.containsKey(KEY_MAIN_ACTIVITY_RV_POSITION)) {
+            mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_MAIN_ACTIVITY_RV_POSITION);
+        }
+
+        mIngredientsList = IngredientModel.getArrayListFromSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
+        if (mIngredientsList != null) {
+            mIngredientsListAdapter.setIngredientsList(mIngredientsList);
+        }
     }
 }

@@ -18,4 +18,5 @@
     <string name="favorites">Favorites</string>
     <string name="delete_an_ingredient">Delete an Ingredient</string>
     <string name="add_some_ingredient">Add some ingredient to your list first</string>
+    <string name="no_internet_connection_message">It looks as you don\'t have Internet connection. Try again when connected.</string>
 </resources>

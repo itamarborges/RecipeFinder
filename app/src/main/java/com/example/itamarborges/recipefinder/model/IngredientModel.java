@@ -8,6 +8,7 @@ import android.util.ArraySet;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class IngredientModel {
 
     public static final String INGREDIENTS_LIST_INDEX = "ingredientsListIndex";
 
-    public static void setArrayListToSharePreferences(Context context, String key, List<Ingredient> list) {
+    public static void setArrayListToSharedPreferences(Context context, String key, List<Ingredient> list) {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
@@ -36,7 +37,7 @@ public class IngredientModel {
     }
 
 
-    public static ArrayList<Ingredient> getArrayListToSharePreferences(Context context, String key) {
+    public static ArrayList<Ingredient> getArrayListFromSharedPreferences(Context context, String key) {
 
         ArrayList<Ingredient> mIngredients = new ArrayList<>();
 
@@ -48,5 +49,12 @@ public class IngredientModel {
             mIngredients.add(new Ingredient(s));
         }
         return mIngredients;
+    }
+
+    public static class IngredientComparator implements Comparator<Ingredient> {
+        @Override
+        public int compare(Ingredient o1, Ingredient o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
     }
 }
