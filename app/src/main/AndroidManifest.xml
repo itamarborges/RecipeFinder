@@ -36,6 +36,7 @@
             android:name=".RecipeDetailActivity"
             android:label="@string/title_activity_recipe_detail"
             android:parentActivityName=".RecipesListActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

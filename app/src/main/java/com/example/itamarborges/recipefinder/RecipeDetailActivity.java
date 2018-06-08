@@ -48,8 +48,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements LoaderMan
 
         if (intent != null) {
             recipe = (Recipe) intent.getSerializableExtra(RECIPE_INDEX);
-            webView.setWebViewClient(new WebViewClient());
-            webView.loadUrl(recipe.getUrl());
+            if (savedInstanceState != null) {
+                webView.restoreState(savedInstanceState);
+            } else {
+                webView.setWebViewClient(new WebViewClient());
+                webView.loadUrl(recipe.getUrl());
+            }
+
 
             setTitle(recipe.getLabel());
         }
@@ -131,5 +136,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements LoaderMan
     @Override
     public void onLoaderReset(@NonNull Loader<Object> loader) {
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        webView.saveState(outState);
     }
 }
