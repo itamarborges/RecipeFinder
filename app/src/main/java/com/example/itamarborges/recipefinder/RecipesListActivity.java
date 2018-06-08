@@ -1,5 +1,6 @@
 package com.example.itamarborges.recipefinder;
 
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
 
 public class RecipesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object>{
 
-    public static final String INGREDIENTS_INDEX = "ingredientsIndex";
+    private static final String KEY_RECIPES_RV_POSITION = "rvRecipesPosition";
 
     private static final int RECIPES_LOADER = 0;
 
@@ -44,6 +45,23 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     IngredientsSummaryAdapter mIngredientsSummaryAdapter;
     RecipeAdapter mRecipeAdapter;
 
+    GridLayoutManager mLayoutManager;
+    private Parcelable mLayoutManagerSavedState;
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.containsKey(KEY_RECIPES_RV_POSITION)) {
+            mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_RECIPES_RV_POSITION);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(KEY_RECIPES_RV_POSITION, mLayoutManager.onSaveInstanceState());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +70,19 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
 
         mIngredientsSummaryAdapter = new IngredientsSummaryAdapter(mIngredientsList);
 
-        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getBaseContext());
-        layoutManager.setFlexDirection(FlexDirection.ROW);
-        layoutManager.setFlexWrap(FlexWrap.WRAP);
-        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        FlexboxLayoutManager mGridLayoutManager = new FlexboxLayoutManager(getBaseContext());
+        mGridLayoutManager.setFlexDirection(FlexDirection.ROW);
+        mGridLayoutManager.setFlexWrap(FlexWrap.WRAP);
+        mGridLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
 
         mRecyclerIngredients.setAdapter(mIngredientsSummaryAdapter);
         mRecyclerIngredients.setHasFixedSize(true);
         mRecyclerIngredients.setNestedScrollingEnabled(false);
-        mRecyclerIngredients.setLayoutManager(layoutManager);
+        mRecyclerIngredients.setLayoutManager(mGridLayoutManager);
 
         mRecipeAdapter = new RecipeAdapter(mRecipes);
 
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this, Utils.numberOfColumns(getWindowManager()));
+        mLayoutManager = new GridLayoutManager(this, Utils.numberOfColumns(getWindowManager()));
         mRecyclerRecipes.setLayoutManager(mLayoutManager);
         mRecyclerRecipes.setAdapter(mRecipeAdapter);
     }
@@ -122,6 +140,10 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
         mRecipeAdapter.setRecipes((List<Recipe>)data);
+
+        if (mLayoutManagerSavedState != null) {
+            mLayoutManager.onRestoreInstanceState(mLayoutManagerSavedState);
+        }
     }
 
     @Override
