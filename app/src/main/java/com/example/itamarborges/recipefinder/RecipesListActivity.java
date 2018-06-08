@@ -1,5 +1,6 @@
 package com.example.itamarborges.recipefinder;
 
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,9 +8,10 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.itamarborges.recipefinder.adapter.IngredientsSummaryAdapter;
 import com.example.itamarborges.recipefinder.adapter.RecipeAdapter;
@@ -39,6 +41,7 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
 
     @BindView(R.id.rv_choosen_ingredients) RecyclerView mRecyclerIngredients;
     @BindView(R.id.rv_recipes) RecyclerView mRecyclerRecipes;
+    @BindView(R.id.pb_loading_indicator) ProgressBar mProgressBar;
 
     List<Ingredient> mIngredientsList;
     List<Recipe> mRecipes;
@@ -104,6 +107,7 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
 
                 @Override
                 protected void onStartLoading() {
+                    mProgressBar.setVisibility(View.VISIBLE);
                     if (mRecipes != null) {
                         deliverResult(mRecipes);
                     } else {
@@ -118,8 +122,8 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
                     List<Recipe> mRecipes = new ArrayList<>();
                     String queryResult = null;
                     try {
-//                        queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
-                        queryResult = NetworkUtils.getResponseFromHttpUrl("teste");
+                        queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+//                        queryResult = NetworkUtils.getResponseFromHttpUrl("teste");
 
                         mRecipes = RecipesJsonUtils.getRecipes(queryResult);
 
@@ -140,6 +144,8 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
         mRecipeAdapter.setRecipes((List<Recipe>)data);
+
+        mProgressBar.setVisibility(View.GONE);
 
         if (mLayoutManagerSavedState != null) {
             mLayoutManager.onRestoreInstanceState(mLayoutManagerSavedState);

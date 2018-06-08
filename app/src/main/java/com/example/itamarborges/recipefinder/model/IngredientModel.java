@@ -3,7 +3,6 @@ package com.example.itamarborges.recipefinder.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.ArraySet;
 
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 
@@ -44,9 +43,10 @@ public class IngredientModel {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> set = sp.getStringSet(key, null);
 
-
-        for (String s : set) {
-            mIngredients.add(new Ingredient(s));
+        if (set != null) {
+            for (String s : set) {
+                mIngredients.add(new Ingredient(s));
+            }
         }
         return mIngredients;
     }

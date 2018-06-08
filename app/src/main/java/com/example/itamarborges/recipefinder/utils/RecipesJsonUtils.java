@@ -1,7 +1,5 @@
 package com.example.itamarborges.recipefinder.utils;
 
-import android.util.Log;
-
 import com.example.itamarborges.recipefinder.pojo.Recipe;
 
 import org.json.JSONArray;

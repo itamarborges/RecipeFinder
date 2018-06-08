@@ -1,7 +1,5 @@
 package com.example.itamarborges.recipefinder.pojo;
 
-import android.text.Editable;
-
 import java.io.Serializable;
 
 /**

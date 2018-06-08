@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_recipe"
     android:layout_gravity="center"
     android:layout_width="match_parent"
@@ -24,7 +25,8 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:paddingTop="8dp"/>
+            android:paddingTop="8dp"
+            tools:src="@drawable/cooking"/>
 
         <TextView
             android:id="@+id/recipe_name"
@@ -33,7 +35,8 @@
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:gravity="left"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:text="@string/recipe_name"/>
 
         <TextView
             android:id="@+id/recipe_source"
@@ -42,7 +45,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:paddingLeft="8dp"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="8dp"
+            tools:text="@string/source_example"/>
 
         <TextView
             android:id="@+id/recipe_calories"
@@ -50,7 +54,8 @@
             android:gravity="start"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp"
+            tools:text="@string/calories_example"/>
 
     </LinearLayout>
 

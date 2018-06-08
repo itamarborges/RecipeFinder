@@ -1,14 +1,9 @@
 package com.example.itamarborges.recipefinder;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
-import com.example.itamarborges.recipefinder.pojo.Recipe;
 
 import java.util.ArrayList;
 

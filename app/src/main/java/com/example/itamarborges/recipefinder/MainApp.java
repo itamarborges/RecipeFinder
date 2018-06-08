@@ -2,7 +2,6 @@ package com.example.itamarborges.recipefinder;
 
 import android.app.Application;
 
-import com.facebook.stetho.Stetho;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 

@@ -13,9 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
 import com.example.itamarborges.recipefinder.model.IngredientModel;
+import com.example.itamarborges.recipefinder.model.RecipeModel;
 import com.example.itamarborges.recipefinder.pojo.Ingredient;
 import com.example.itamarborges.recipefinder.utils.NetworkUtils;
 
@@ -47,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mIngredientsList = new ArrayList<>();
-
-//        mIngredientsList.add(new Ingredient("garlic"));
-//        mIngredientsList.add(new Ingredient("apple"));
-//
-//        IngredientModel.setArrayListToSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX, mIngredientsList);
 
         mIngredientsListAdapter = new IngredientsListAdapter(mIngredientsList);
 
@@ -85,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_MAIN_ACTIVITY_RV_POSITION);
             }
         }
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
+
+        RecipeModel recipeModel = new RecipeModel();
+        recipeModel.updateWidget(getApplicationContext());
     }
 
     @Override

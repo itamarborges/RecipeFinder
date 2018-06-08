@@ -6,8 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.widget.RemoteViews;
 
 import com.example.itamarborges.recipefinder.pojo.Recipe;
