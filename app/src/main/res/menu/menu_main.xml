@@ -5,7 +5,8 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/ic_favorite_white"
+        android:scaleType="fitXY"
         android:title="@string/favorites"
         app:showAsAction="always"/>
 </menu>

@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:scaleType="center"
+        android:scaleType="fitXY"
         android:tint="@android:color/white"
-        app:srcCompat="@drawable/search_small"/>
+        app:srcCompat="@drawable/search"/>
 
 </android.support.design.widget.CoordinatorLayout>
