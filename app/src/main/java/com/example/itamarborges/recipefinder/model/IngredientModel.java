@@ -25,7 +25,7 @@ public class IngredientModel {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
 
-        Set<String> s = new HashSet<String>();
+        Set<String> s = new HashSet<>();
 
         for (Ingredient ing: list) {
             s.add(ing.getName());

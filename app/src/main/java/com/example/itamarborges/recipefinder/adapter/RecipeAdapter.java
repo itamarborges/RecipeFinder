@@ -54,9 +54,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-        RecipeHolder viewHolder = new RecipeHolder(view, context);
 
-        return viewHolder;
+        return new RecipeHolder(view, context);
     }
 
     @Override
@@ -92,6 +91,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
                         .into(mImage);
             }
 
+            mImage.setContentDescription(recipe.getLabel());
             mRecipeName.setText(recipe.getLabel());
             mRecipeSource.setText("Source: ".concat(String.valueOf(recipe.getSource())));
             mRecipeCalories.setText("Calories: ".concat(String.format("%.2f", recipe.getCalories())));

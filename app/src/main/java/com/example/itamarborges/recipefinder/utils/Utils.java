@@ -15,7 +15,6 @@ public class Utils {
         // You can change this divider to adjust the size of the poster
         int widthDivider = 600;
         int width = displayMetrics.widthPixels;
-        int nColumns = width / widthDivider;
-        return nColumns;
+        return width / widthDivider;
     }
 }

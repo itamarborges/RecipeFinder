@@ -129,7 +129,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
-        fab.setActivated(((Cursor) data).moveToFirst());
+        boolean isFavorite = ((Cursor) data).moveToFirst();
+        fab.setActivated(isFavorite);
+        fab.setContentDescription(isFavorite ? getString(R.string.add_this_recipe_to_my_favorite_recipes) : getString(R.string.delete_from_favorite_recipes));
 
     }
 

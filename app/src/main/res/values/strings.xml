@@ -22,4 +22,7 @@
     <string name="recipe_name">Recipe Name</string>
     <string name="source_example">Source: Google Inc</string>
     <string name="calories_example">Calories: 999</string>
+    <string name="recipe_image">Recipe Image</string>
+    <string name="add_this_recipe_to_my_favorite_recipes">Add this recipe to my Favorite Recipes</string>
+    <string name="delete_from_favorite_recipes">Delete this recipe from my Favorite Recipes</string>
 </resources>

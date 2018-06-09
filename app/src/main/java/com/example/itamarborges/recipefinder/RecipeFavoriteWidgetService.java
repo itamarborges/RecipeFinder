@@ -21,7 +21,7 @@ public class RecipeFavoriteWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        mFavoriteRecipes = (ArrayList) intent.getStringArrayListExtra(FAVORITES_RECIPE_INGREDIENTS);
+        mFavoriteRecipes = intent.getStringArrayListExtra(FAVORITES_RECIPE_INGREDIENTS);
         return new BakingRemoteViewsFactory(this.getApplicationContext(), mFavoriteRecipes);
     }
 }
@@ -29,7 +29,7 @@ public class RecipeFavoriteWidgetService extends RemoteViewsService {
 class BakingRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     Context mContext;
-    ArrayList<String> mListRecipes = new ArrayList<>();
+    ArrayList<String> mListRecipes;
 
 public BakingRemoteViewsFactory(Context applicationContext, ArrayList<String> listRecipes) {
         mContext = applicationContext;

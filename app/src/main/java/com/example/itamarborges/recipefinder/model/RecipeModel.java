@@ -31,16 +31,12 @@ public class RecipeModel {
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_URL, url);
         contentValues.put(RecipeFinderContract.FavoriteEntry.COLUMN_CALORIES, calories);
 
-        Uri uriInsert = context.getContentResolver().insert(RecipeFinderContract.FavoriteEntry.CONTENT_URI, contentValues);
-
-        return uriInsert;
+        return context.getContentResolver().insert(RecipeFinderContract.FavoriteEntry.CONTENT_URI, contentValues);
     }
 
     public int delete(Context context, String uri) {
 
-        int deletedRows = context.getContentResolver().delete(RecipeFinderContract.FavoriteEntry.CONTENT_URI.buildUpon().appendPath(uri).build(), null, null);
-
-        return deletedRows;
+        return context.getContentResolver().delete(RecipeFinderContract.FavoriteEntry.CONTENT_URI.buildUpon().appendPath(uri).build(), null, null);
     }
 
     public List<Recipe> listFavoriteRecipes(Context context) {

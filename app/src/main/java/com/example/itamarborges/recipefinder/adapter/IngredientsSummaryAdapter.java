@@ -48,9 +48,8 @@ public class IngredientsSummaryAdapter extends RecyclerView.Adapter<IngredientsS
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-        IngredientsListViewHolder viewHolder = new IngredientsListViewHolder(view);
 
-        return viewHolder;
+        return new IngredientsListViewHolder(view);
     }
 
     @Override

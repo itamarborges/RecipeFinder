@@ -120,7 +120,7 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
 
                     URL searchUrl = NetworkUtils.buildUrlSearchEdamam(mIngredientsList);
                     List<Recipe> mRecipes = new ArrayList<>();
-                    String queryResult = null;
+                    String queryResult;
                     try {
                         queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
 //                        queryResult = NetworkUtils.getResponseFromHttpUrl("teste");
