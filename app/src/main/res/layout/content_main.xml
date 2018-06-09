@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
+                android:id="@+id/layout_input_ingredient"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -39,6 +40,7 @@
                     android:id="@+id/input_ingredient"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:saveEnabled="true"
                     android:hint="@string/type_an_ingredient"/>
 
             </android.support.design.widget.TextInputLayout>

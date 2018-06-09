@@ -31,6 +31,10 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private static final String KEY_MAIN_ACTIVITY_RV_POSITION = "rvMainActivityPosition";
+    private static final String KEY_INPUT_INGREDIENTS = "inputIngredients";
+    private static final String KEY_INPUT_SELECTION_START = "inputIngredientsStart";
+    private static final String KEY_INPUT_SELECTION_END = "inputIngredientsEnd";
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.input_ingredient)TextInputEditText textInputIngredient;
@@ -156,14 +160,34 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putParcelable(KEY_MAIN_ACTIVITY_RV_POSITION, mLayoutManagerIngredients.onSaveInstanceState());
+        outState.putString(KEY_INPUT_INGREDIENTS, textInputIngredient.getText().toString());
+        outState.putInt(KEY_INPUT_SELECTION_START, textInputIngredient.getSelectionStart());
+        outState.putInt(KEY_INPUT_SELECTION_END, textInputIngredient.getSelectionEnd());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
+        int selectionStart = 0;
+        int selectionEnd = 0;
+
         if (savedInstanceState.containsKey(KEY_MAIN_ACTIVITY_RV_POSITION)) {
             mLayoutManagerSavedState = savedInstanceState.getParcelable(KEY_MAIN_ACTIVITY_RV_POSITION);
         }
+
+        if (savedInstanceState.containsKey(KEY_INPUT_INGREDIENTS)) {
+            textInputIngredient.setText(savedInstanceState.getString(KEY_INPUT_INGREDIENTS));
+        }
+
+        if (savedInstanceState.containsKey(KEY_INPUT_SELECTION_START)) {
+            selectionStart = savedInstanceState.getInt(KEY_INPUT_SELECTION_START,0);
+        }
+
+        if (savedInstanceState.containsKey(KEY_INPUT_SELECTION_END)) {
+            selectionEnd = savedInstanceState.getInt(KEY_INPUT_SELECTION_END,0);
+        }
+
+        textInputIngredient.setSelection(selectionStart, selectionEnd);
 
         mIngredientsList = IngredientModel.getArrayListFromSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
         if (mIngredientsList != null) {
