@@ -10,15 +10,16 @@
     tools:context="com.example.itamarborges.recipefinder.RecipeDetailActivity"
     tools:showIn="@layout/activity_recipe_detail">
 
-    <fragment android:name="com.example.itamarborges.recipefinder.fragments.AdFragment"
-              android:id="@+id/anuncioDetail"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              tools:layout="@layout/fragment_ad"/>
+    <fragment
+        android:name="com.example.itamarborges.recipefinder.fragments.AdFragment"
+        android:id="@+id/anuncioDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_ad"/>
 
     <WebView
         android:id="@+id/web_view_recipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

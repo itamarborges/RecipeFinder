@@ -22,12 +22,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeFavoriteListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object>{
+public class RecipeFavoriteListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object> {
 
     private static final int FAVORITE_RECIPES_LOADER = 0;
     private static final String KEY_FAVORITE_RECIPES_RV_POSITION = "rvFavoriteRecipesPosition";
 
-    @BindView(R.id.rv_favorite_recipes) RecyclerView mRecyclerRecipes;
+    @BindView(R.id.rv_favorite_recipes)
+    RecyclerView mRecyclerRecipes;
 
     List<Recipe> mRecipes;
     RecipeAdapter mRecipeAdapter;
@@ -119,7 +120,7 @@ public class RecipeFavoriteListActivity extends AppCompatActivity implements Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
-        mRecipeAdapter.setRecipes((List<Recipe>)data);
+        mRecipeAdapter.setRecipes((List<Recipe>) data);
 
         if (mLayoutManagerSavedState != null) {
             mLayoutManager.onRestoreInstanceState(mLayoutManagerSavedState);

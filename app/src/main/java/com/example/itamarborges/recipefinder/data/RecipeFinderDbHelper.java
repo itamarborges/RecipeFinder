@@ -22,14 +22,14 @@ public class RecipeFinderDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create tasks table (careful to follow SQL formatting rules)
-        final String CREATE_TABLE = "CREATE TABLE "  + RecipeFinderContract.FavoriteEntry.TABLE_NAME + " (" +
-                RecipeFinderContract.FavoriteEntry._ID                + " INTEGER PRIMARY KEY, " +
+        final String CREATE_TABLE = "CREATE TABLE " + RecipeFinderContract.FavoriteEntry.TABLE_NAME + " (" +
+                RecipeFinderContract.FavoriteEntry._ID + " INTEGER PRIMARY KEY, " +
                 RecipeFinderContract.FavoriteEntry.COLUMN_URI + " TEXT NOT NULL, " +
                 RecipeFinderContract.FavoriteEntry.COLUMN_LABEL + " TEXT NOT NULL, " +
                 RecipeFinderContract.FavoriteEntry.COLUMN_URL_IMAGE + " TEXT NOT NULL, " +
                 RecipeFinderContract.FavoriteEntry.COLUMN_SOURCE + " TEXT NOT NULL, " +
                 RecipeFinderContract.FavoriteEntry.COLUMN_URL + " TEXT NOT NULL, " +
-                RecipeFinderContract.FavoriteEntry.COLUMN_CALORIES    + " REAL NOT NULL);";
+                RecipeFinderContract.FavoriteEntry.COLUMN_CALORIES + " REAL NOT NULL);";
 
         db.execSQL(CREATE_TABLE);
     }

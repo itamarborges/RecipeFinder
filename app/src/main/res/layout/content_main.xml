@@ -16,11 +16,12 @@
         android:layout_margin="@dimen/default_margin"
         android:orientation="vertical">
 
-        <fragment android:name="com.example.itamarborges.recipefinder.fragments.AdFragment"
-                  android:id="@+id/anuncioMain"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  tools:layout="@layout/fragment_ad"/>
+        <fragment
+            android:name="com.example.itamarborges.recipefinder.fragments.AdFragment"
+            android:id="@+id/anuncioMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_ad"/>
 
         <LinearLayout
             android:layout_width="match_parent"

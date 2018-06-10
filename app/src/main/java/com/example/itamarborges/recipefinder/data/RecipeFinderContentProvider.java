@@ -53,7 +53,7 @@ public class RecipeFinderContentProvider extends ContentProvider {
 
         switch (match) {
             case FAVORITE:
-                retCursor =  db.query(RecipeFinderContract.FavoriteEntry.TABLE_NAME,
+                retCursor = db.query(RecipeFinderContract.FavoriteEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -67,7 +67,7 @@ public class RecipeFinderContentProvider extends ContentProvider {
                 String mSelection = "uri=?";
                 String[] mSelectionArgs = new String[]{id};
 
-                retCursor =  db.query(RecipeFinderContract.FavoriteEntry.TABLE_NAME,
+                retCursor = db.query(RecipeFinderContract.FavoriteEntry.TABLE_NAME,
                         projection,
                         mSelection,
                         mSelectionArgs,
@@ -103,7 +103,7 @@ public class RecipeFinderContentProvider extends ContentProvider {
             case FAVORITE:
 
                 long id = db.insert(RecipeFinderContract.FavoriteEntry.TABLE_NAME, null, contentValues);
-                if ( id > 0 ) {
+                if (id > 0) {
                     returnUri = ContentUris.withAppendedId(RecipeFinderContract.FavoriteEntry.CONTENT_URI, id);
                 } else {
                     throw new android.database.SQLException("Failed to insert row into " + uri);

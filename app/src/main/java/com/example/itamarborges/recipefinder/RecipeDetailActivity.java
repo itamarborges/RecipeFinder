@@ -24,7 +24,7 @@ import com.example.itamarborges.recipefinder.pojo.Recipe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object>{
+public class RecipeDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object> {
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
@@ -32,9 +32,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements LoaderMan
 
     private static final int RECIPE_FAVORITE_LOADER_ID = 0;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.web_view_recipe) WebView webView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.web_view_recipe)
+    WebView webView;
 
     Recipe recipe;
 

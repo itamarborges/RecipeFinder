@@ -27,7 +27,7 @@ public class IngredientModel {
 
         Set<String> s = new HashSet<>();
 
-        for (Ingredient ing: list) {
+        for (Ingredient ing : list) {
             s.add(ing.getName());
         }
 

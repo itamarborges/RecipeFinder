@@ -73,11 +73,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
         Context mContext;
 
-        @BindView(R.id.recipe_name) TextView mRecipeName;
-        @BindView(R.id.recipe_source) TextView mRecipeSource;
-        @BindView(R.id.recipe_calories) TextView mRecipeCalories;
-        @BindView(R.id.cv_recipe) CardView mCvRecipe;
-        @BindView(R.id.img_recipe) ImageView mImage;
+        @BindView(R.id.recipe_name)
+        TextView mRecipeName;
+        @BindView(R.id.recipe_source)
+        TextView mRecipeSource;
+        @BindView(R.id.recipe_calories)
+        TextView mRecipeCalories;
+        @BindView(R.id.cv_recipe)
+        CardView mCvRecipe;
+        @BindView(R.id.img_recipe)
+        ImageView mImage;
 
         void bind(final Recipe recipe) {
 
@@ -93,8 +98,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
             mImage.setContentDescription(recipe.getLabel());
             mRecipeName.setText(recipe.getLabel());
-            mRecipeSource.setText("Source: ".concat(String.valueOf(recipe.getSource())));
-            mRecipeCalories.setText("Calories: ".concat(String.format("%.2f", recipe.getCalories())));
+            mRecipeSource.setText(mContext.getString(R.string.source).concat(String.valueOf(recipe.getSource())));
+            mRecipeCalories.setText(mContext.getString(R.string.calories).concat(String.format("%.2f", recipe.getCalories())));
 
             mCvRecipe.setOnClickListener(new View.OnClickListener() {
                 @Override

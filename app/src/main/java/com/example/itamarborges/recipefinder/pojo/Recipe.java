@@ -30,9 +30,13 @@ public class Recipe implements Serializable, Parcelable {
     }
 
 
-    public String getUri() { return uri; }
+    public String getUri() {
+        return uri;
+    }
 
-    public void setUri(String uri) { this.uri = uri; }
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     public int getId() {
         return id;
@@ -42,7 +46,9 @@ public class Recipe implements Serializable, Parcelable {
         this.id = id;
     }
 
-    public String getLabel() { return label; }
+    public String getLabel() {
+        return label;
+    }
 
     public void setLabel(String label) {
         this.label = label;

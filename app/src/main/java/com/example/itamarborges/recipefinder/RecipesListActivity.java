@@ -12,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.itamarborges.recipefinder.adapter.IngredientsSummaryAdapter;
 import com.example.itamarborges.recipefinder.adapter.RecipeAdapter;
@@ -33,15 +34,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object>{
+public class RecipesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Object> {
 
     private static final String KEY_RECIPES_RV_POSITION = "rvRecipesPosition";
 
     private static final int RECIPES_LOADER = 0;
 
-    @BindView(R.id.rv_choosen_ingredients) RecyclerView mRecyclerIngredients;
-    @BindView(R.id.rv_recipes) RecyclerView mRecyclerRecipes;
-    @BindView(R.id.pb_loading_indicator) ProgressBar mProgressBar;
+    @BindView(R.id.rv_choosen_ingredients)
+    RecyclerView mRecyclerIngredients;
+    @BindView(R.id.rv_recipes)
+    RecyclerView mRecyclerRecipes;
+    @BindView(R.id.pb_loading_indicator)
+    ProgressBar mProgressBar;
+    @BindView(R.id.label_no_recipes)
+    TextView mTvNoRecipes;
 
     List<Ingredient> mIngredientsList;
     List<Recipe> mRecipes;
@@ -73,15 +79,15 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
 
         mIngredientsSummaryAdapter = new IngredientsSummaryAdapter(mIngredientsList);
 
-        FlexboxLayoutManager mGridLayoutManager = new FlexboxLayoutManager(getBaseContext());
-        mGridLayoutManager.setFlexDirection(FlexDirection.ROW);
-        mGridLayoutManager.setFlexWrap(FlexWrap.WRAP);
-        mGridLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        FlexboxLayoutManager mFlexboxLayoutManager = new FlexboxLayoutManager(getBaseContext());
+        mFlexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
+        mFlexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);
+        mFlexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
 
         mRecyclerIngredients.setAdapter(mIngredientsSummaryAdapter);
         mRecyclerIngredients.setHasFixedSize(true);
         mRecyclerIngredients.setNestedScrollingEnabled(false);
-        mRecyclerIngredients.setLayoutManager(mGridLayoutManager);
+        mRecyclerIngredients.setLayoutManager(mFlexboxLayoutManager);
 
         mRecipeAdapter = new RecipeAdapter(mRecipes);
 
@@ -101,49 +107,53 @@ public class RecipesListActivity extends AppCompatActivity implements LoaderMana
     @NonNull
     @Override
     public Loader<Object> onCreateLoader(int id, @Nullable Bundle args) {
-            return new AsyncTaskLoader<Object>(this) {
+        return new AsyncTaskLoader<Object>(this) {
 
-                List<Recipe> mRecipes = null;
+            List<Recipe> mRecipes = null;
 
-                @Override
-                protected void onStartLoading() {
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    if (mRecipes != null) {
-                        deliverResult(mRecipes);
-                    } else {
-                        forceLoad();
-                    }
+            @Override
+            protected void onStartLoading() {
+                mProgressBar.setVisibility(View.VISIBLE);
+                if (mRecipes != null) {
+                    deliverResult(mRecipes);
+                } else {
+                    forceLoad();
                 }
+            }
 
-                @Override
-                public List<Recipe> loadInBackground() {
+            @Override
+            public List<Recipe> loadInBackground() {
 
-                    URL searchUrl = NetworkUtils.buildUrlSearchEdamam(mIngredientsList);
-                    List<Recipe> mRecipes = new ArrayList<>();
-                    String queryResult;
-                    try {
-                        queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+                URL searchUrl = NetworkUtils.buildUrlSearchEdamam(mIngredientsList);
+                List<Recipe> mRecipes = new ArrayList<>();
+                String queryResult;
+                try {
+                    queryResult = NetworkUtils.getResponseFromHttpUrl(searchUrl);
 //                        queryResult = NetworkUtils.getResponseFromHttpUrl("teste");
 
-                        mRecipes = RecipesJsonUtils.getRecipes(queryResult);
+                    mRecipes = RecipesJsonUtils.getRecipes(queryResult);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return mRecipes;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                return mRecipes;
+            }
 
-                // deliverResult sends the result of the load, a Cursor, to the registered listener
-                public void deliverResult(List<Recipe> data) {
-                    mRecipes = data;
-                    super.deliverResult(data);
-                }
-            };
+            // deliverResult sends the result of the load, a Cursor, to the registered listener
+            public void deliverResult(List<Recipe> data) {
+                mRecipes = data;
+                super.deliverResult(data);
+            }
+        };
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Object> loader, Object data) {
-        mRecipeAdapter.setRecipes((List<Recipe>)data);
+        List<Recipe> recipes = (List<Recipe>) data;
+        mRecipeAdapter.setRecipes(recipes);
+
+        mTvNoRecipes.setVisibility(recipes.size() == 0? View.VISIBLE: View.GONE);
+        mRecyclerRecipes.setVisibility(recipes.size() == 0? View.GONE: View.VISIBLE);
 
         mProgressBar.setVisibility(View.GONE);
 

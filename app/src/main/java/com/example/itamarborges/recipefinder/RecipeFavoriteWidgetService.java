@@ -31,7 +31,7 @@ class BakingRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory 
     Context mContext;
     ArrayList<String> mListRecipes;
 
-public BakingRemoteViewsFactory(Context applicationContext, ArrayList<String> listRecipes) {
+    public BakingRemoteViewsFactory(Context applicationContext, ArrayList<String> listRecipes) {
         mContext = applicationContext;
         mListRecipes = listRecipes;
     }

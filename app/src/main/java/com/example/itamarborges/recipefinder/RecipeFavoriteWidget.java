@@ -33,7 +33,7 @@ public class RecipeFavoriteWidget extends AppWidgetProvider {
 
             ArrayList<String> favoriteRecipes = new ArrayList<>();
 
-            for(Recipe r : recipes) {
+            for (Recipe r : recipes) {
                 String label = r.getLabel();
                 favoriteRecipes.add(label);
             }
@@ -52,9 +52,9 @@ public class RecipeFavoriteWidget extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget_layout, homePendingIntent);
             views.setPendingIntentTemplate(R.id.favorite_recipes_list, homePendingIntent);
         }
-    // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId,views);
-}
+        // Instruct the widget manager to update the widget
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

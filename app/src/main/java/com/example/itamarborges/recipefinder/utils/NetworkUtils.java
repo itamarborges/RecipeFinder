@@ -40,17 +40,17 @@ public class NetworkUtils {
     public static URL buildUrlSearchEdamam(List<Ingredient> ingredients) {
 
         StringBuffer sbIngredients = new StringBuffer();
-        for (Ingredient ing : ingredients){
+        for (Ingredient ing : ingredients) {
             sbIngredients.append(ing.getName()).append(",");
         }
         sbIngredients.deleteCharAt(sbIngredients.lastIndexOf(","));
 
-         Uri builtUri = Uri.parse(EDAMAM_API_URL).buildUpon()
+        Uri builtUri = Uri.parse(EDAMAM_API_URL).buildUpon()
                 .appendEncodedPath(EDAMAM_API_SEARCH)
                 .appendQueryParameter(EDAMAM_API_QUERY, sbIngredients.toString())
                 .appendQueryParameter(EDAMAM_API_ID, API_ID)
                 .appendQueryParameter(EDAMAM_API_KEY, API_KEY)
-                 .build();
+                .build();
 
         URL url = null;
         try {

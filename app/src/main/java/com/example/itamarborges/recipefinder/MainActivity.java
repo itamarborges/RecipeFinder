@@ -10,9 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.example.itamarborges.recipefinder.adapter.IngredientsListAdapter;
@@ -35,10 +35,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_INPUT_SELECTION_START = "inputIngredientsStart";
     private static final String KEY_INPUT_SELECTION_END = "inputIngredientsEnd";
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.input_ingredient)TextInputEditText textInputIngredient;
-    @BindView(R.id.rv_ingredients_list) RecyclerView mRecyclerIngredients;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.input_ingredient)
+    TextInputEditText textInputIngredient;
+    @BindView(R.id.rv_ingredients_list)
+    RecyclerView mRecyclerIngredients;
 
     List<Ingredient> mIngredientsList;
     IngredientsListAdapter mIngredientsListAdapter;
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mIngredientsList = IngredientModel.getArrayListFromSharedPreferences(getApplicationContext(), IngredientModel.INGREDIENTS_LIST_INDEX);
                 if (mIngredientsList.size() < 1) {
-                  Snackbar.make(view, R.string.add_some_ingredient, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, R.string.add_some_ingredient, Snackbar.LENGTH_LONG).show();
                 } else {
                     if (!NetworkUtils.isNetworkAvailable(getBaseContext())) {
                         Snackbar.make(view, R.string.no_internet_connection_message, Snackbar.LENGTH_LONG).show();
@@ -129,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         Ingredient ingredient = new Ingredient(textInputIngredient.getText().toString());
 
-        if (mIngredientsList.contains(ingredient)){
+        if (mIngredientsList.contains(ingredient)) {
             Snackbar.make(mRecyclerIngredients, getString(R.string.ingredient_on_the_list), Snackbar.LENGTH_LONG).show();
             return;
         }
@@ -180,11 +184,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState.containsKey(KEY_INPUT_SELECTION_START)) {
-            selectionStart = savedInstanceState.getInt(KEY_INPUT_SELECTION_START,0);
+            selectionStart = savedInstanceState.getInt(KEY_INPUT_SELECTION_START, 0);
         }
 
         if (savedInstanceState.containsKey(KEY_INPUT_SELECTION_END)) {
-            selectionEnd = savedInstanceState.getInt(KEY_INPUT_SELECTION_END,0);
+            selectionEnd = savedInstanceState.getInt(KEY_INPUT_SELECTION_END, 0);
         }
 
         textInputIngredient.setSelection(selectionStart, selectionEnd);
