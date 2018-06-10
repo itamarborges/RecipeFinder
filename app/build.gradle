@@ -16,7 +16,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("android.jks")
+            storeFile file("../android.jks")
             storePassword keystoreProperties['STORE_PASSWORD']
             keyAlias keystoreProperties['KEY_ALIAS']
             keyPassword keystoreProperties['KEY_PASSWORD']

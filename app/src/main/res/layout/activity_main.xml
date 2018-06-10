@@ -30,6 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:scaleType="fitXY"
+        android:contentDescription="@string/search_recipe"
         android:tint="@android:color/white"
         app:srcCompat="@drawable/search"/>
 
